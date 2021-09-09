@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controllable curve wave demo</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+      integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="./main.min.js"></script>
+    <style>
+      svg {
+        border: 1px dashed rebeccapurple;
+      }
+      #app {
+        display: flex;
+      }
+      .form > * {
+        display: flex;
+        flex-direction: row;
+      }
+      .form > * + * {
+        margin-top: 12px;
+      }
+      .form > div > label {
+        display: block;
+        width: 120px;
+      }
+
+      .nav-bar {
+        display: grid;
+        position: relative;
+      }
+      .nav-bar > * {
+        grid-area: 1 / 1 / 2 / 2;
+      }
+      .nav-bar > .menu {
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(4, 40px);
+        grid-template-rows: 40px;
+        place-content: center;
+        place-items: stretch;
+        bottom: 0;
+        place-self: end center;
+        gap: 36px;
+        padding-bottom: 16px;
+        user-select: none;
+      }
+
+      .nav-bar > .menu > * {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        color: white;
+        cursor: pointer;
+      }
+      .nav-bar > .menu > .active {
+        background: #537895;
+        animation: show 0.5s;
+        animation-fill-mode: both;
+      }
+
+      @keyframes show {
+        0% {
+          transform: scale(1) translateY(0);
+        }
+        100% {
+          transform: scale(1.2) translateY(-8px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <svg
+          ref="stage"
+          width="471"
+          height="134"
+          viewBox="0 -1 471 80"
+          preserveAspectRatio="xMidYMax meet"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            class="shape"
+            :d="path"
+            fill="url(#paint0_radial)"
+            stroke="red"
+          />
+          <defs>
+            <radialGradient
+              id="paint0_radial"
+              cx="0"
+              cy="0"
+              r="1"
+              gradientUnits="userSpaceOnUse"
+              gradientTransform="translate(49.5 36.5) rotate(8.81404) scale(385.047 1350.54)"
+            >
+              <stop offset="0.140625" stop-color="#BE6767" />
+              <stop offset="1" stop-color="#7747C5" />
+            </radialGradient>
+          </defs>
+        </svg>
+
+        <div class="nav-bar" ref="nav_bar">
+          <div class="menu">
+            <div :class="{active: actived_count===0}" @click="actived_count=0">
+              水
+            </div>
+            <div :class="{active: actived_count===1}" @click="actived_count=1">
+              木
+            </div>
+            <div :class="{active: actived_count===2}" @click="actived_count=2">
+              林
+            </div>
+            <div :class="{active: actived_count===3}" @click="actived_count=3">
+              风
+            </div>
+          </div>
+          <svg
+            class="background"
+            width="471"
+            height="134"
+            viewBox="0 -1 471 80"
+            preserveAspectRatio="xMidYMax meet"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="shape"
+              :d="actived_path"
+              fill="url(#paint0_radial)"
+              stroke="red"
+            />
+            <defs>
+              <radialGradient
+                id="paint0_radial"
+                cx="0"
+                cy="0"
+                r="1"
+                gradientUnits="userSpaceOnUse"
+                gradientTransform="translate(49.5 36.5) rotate(8.81404) scale(385.047 1350.54)"
+              >
+                <stop offset="0.140625" stop-color="#BE6767" />
+                <stop offset="1" stop-color="#7747C5" />
+              </radialGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <div class="form">
+        <div>
+          <label for="">neck_height: </label
+          ><input type="range" v-model="neck_height" />
+          <input type="text" v-model="neck_height" />
+        </div>
+        <div>
+          <label for="">radius: </label><input type="range" v-model="radius" />
+          <input type="text" v-model="radius" />
+        </div>
+        <div>
+          <label for="">top_span: </label
+          ><input type="range" v-model="top_span" />
+          <input type="text" v-model="top_span" />
+        </div>
+        <div>
+          <label for="">bottom_span: </label
+          ><input type="range" v-model="bottom_span" />
+          <input type="text" v-model="bottom_span" />
+        </div>
+        <div>
+          <hr width="100%" />
+        </div>
+        <div>
+          <label for="">growth: </label
+          ><input type="range" v-model="growth" min="0" max="1" step="0.001" />
+          <input type="text" v-model="growth" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
