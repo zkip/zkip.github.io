@@ -1,0 +1,1 @@
+const e=typeof window<"u";function n(){return"https://auth.zkip.cc"}function o(){return"https://zkip.github.io"}function s(){return localStorage.getItem("token")}function r(t){return localStorage.setItem("token",t)}export{s as a,o as b,n as g,e as i,r as s};
